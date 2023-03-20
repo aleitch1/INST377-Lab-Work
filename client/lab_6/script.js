@@ -41,26 +41,28 @@ async function mainEvent() { // the async keyword means we can make API requests
   const filterDataButton = document.querySelector('#filter'); // This class name lets us target a labelled button for an event listener
   const loadDataButton = document.querySelector('#data_load'); // This class name lets us target a labelled button for an event listener
   const generateListButton = document.querySelector('#generate'); // This class name lets us target a labelled button for an event listener
+  
+  const loadAnimation = document.querySelector('#data_load_animation');
+  loadAnimation.style.display = 'none';
+
   let currentList = []; // this is "scoped" to the main event function
   
   /* We need to listen to an "event" to have something happen in our page - here we're listening for a "submit" */
   loadDataButton.addEventListener('click', async (submitEvent) => { // async has to be declared on every function that needs to "await" something
-    submitEvent.preventDefault(); // This prevents your page from becoming a list of 1000 records from the county, even if your form still has an action set on it
-    console.log('form submission'); // this is substituting for a "breakpoint" - it prints to the browser to tell us we successfully submitted the form
+    console.log('Loading data'); // this is substituting for a "breakpoint" - it prints to the browser to tell us we successfully submitted the form
+    loadAnimation.style.display = 'inline-block';
 
+    
     // Basic GET request - this replaces the form Action
     const results = await fetch('https://data.princegeorgescountymd.gov/resource/umjn-t2iz.json');
 
     // This changes the response from the GET into data we can use - an "object"
     currentList = await results.json();
+    
+    loadAnimation.style.display = 'none';
     console.table(currentList); 
   });
 
-
-  // Filtering a list requires a second function, which operates on the same data set
-  // the event listener is ALWAYS on, but can only do anything once it has a data set.
-
-  // This event listener is on the button
   filterDataButton.addEventListener('click', (event) => {
     console.log('clicked filterButton'); // log out clicks for easier debugging
     // this is the preferred way to handle form data in JS in 2022
@@ -88,9 +90,4 @@ async function mainEvent() { // the async keyword means we can make API requests
   })
 }
 
-/*
-  This adds an event listener that fires our main event only once our page elements have loaded
-  The use of the async keyword means we can "await" events before continuing in our scripts
-  In this case, we load some data when the form has submitted
-*/
 document.addEventListener('DOMContentLoaded', async () => mainEvent()); // the async keyword means we can make API requests

@@ -23,7 +23,7 @@
               <input type="text" name="resto" id="resto">
             </div>
             <div class="buttons">
-              <button type="submit" id="filter">Filter Data</button>
+              <button type="button" id="filter">Filter Data</button>
               <button type="button" id="generate">Generate List</button>
             </div>
           </form>
@@ -34,8 +34,9 @@
           <h2>Local Restaurant List</h2>
           <ol class="box" id="restaurant_list">
             <!-- description box -->
-            A list of restaurants from an API
+            A list of local restaurants
           </ol>
+          <div class="lds-ellipsis" id="data_load_animation"><div></div><div></div><div></div><div></div></div>
         </div>
       </div>
       <footer class="footer">
